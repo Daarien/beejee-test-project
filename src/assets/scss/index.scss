@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.menu-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 35px;
+  pointer-events: none;
+}
+
+.menu-account {
+  display: flex;
+  color: white;
+
+  .account-enter {
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 0 15px;
+    margin-left: 10px;
+    width: 5rem;
+    box-shadow: 0 0 3px white;
+    cursor: pointer;
+    transition: box-shadow 300ms;
+    &:hover {
+      box-shadow: 0 0 10px white;
+    }
+  }
+  
+  .account-dropdown {
+    top: 5px !important;
+    padding: 5px;
+    form {
+      input {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+.control-buttons {
+  button {
+    min-width: 3rem;
+  }
+}
+
+.cancel-button-wrapper {
+  position: relative;
+  button {
+    position: absolute;
+    left: 0;
+  }
+}
