@@ -46,7 +46,7 @@ function Account({ name, status, users, logIn, logOff }) {
 
 		{status === 'guest' &&
 			<Dropdown isOpen={isOpen} toggle={handleToggle}>
-				<DropdownToggle className='account-enter'>Enter</DropdownToggle>
+				<DropdownToggle className='account-enter'>Log in</DropdownToggle>
 				<DropdownMenu className='account-dropdown'>
 					<Form onSubmit={handleSubmit}>
 						<Label>Name</Label>
@@ -54,7 +54,7 @@ function Account({ name, status, users, logIn, logOff }) {
 						<Label>Password</Label>
 						<Input value={user.password} onChange={handleChange} type='password' autoComplete='off' />
 						<div className='d-flex justify-content-center'>
-							<Button type='submit' color='info' size='sm'>Submit</Button>
+							<Button type='submit' color='info' size='sm'>Enter</Button>
 						</div>
 					</Form>
 				</DropdownMenu>

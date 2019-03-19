@@ -40,9 +40,9 @@ code {
     width: 5rem;
     box-shadow: 0 0 3px white;
     cursor: pointer;
-    transition: box-shadow 300ms;
+    transition: box-shadow 200ms;
     &:hover {
-      box-shadow: 0 0 10px white;
+      box-shadow: 0 0 15px white;
     }
   }
   

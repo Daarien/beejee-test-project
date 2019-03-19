@@ -127,7 +127,7 @@ class App extends Component {
 
   handleEditTask = (e) => {
     e.stopPropagation();
-    const { id } = e.target;
+    const { id } = e.currentTarget;
     this.setState({
       editMode: true,
       editableTaskID: +id.split('-')[1],
