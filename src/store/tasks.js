@@ -19,26 +19,28 @@ export const dispatcher = {
 
         if (response.status === 'ok') {
             dispatch(getTasks(response.message));
-        } else {
-            console.error('store => getTasks() fetch error !', response.message);
+        } else if (response.message) {
+            dispatch({ type: SET_ERROR, error: response.message });
         }
     },
     addTask: (payload) => async dispatch => {
         dispatch({ type: SET_UPLOADING });
         const response = await create(payload);
-        console.log('TCL: addTask response', response);
+
         if (response.status === 'ok') {
             dispatch({ type: ADD_TASK });
+        } else if (response.message) {
+            dispatch({ type: SET_ERROR, error: response.message });
         }
     },
     editTask: (id, payload) => async dispatch => {
         dispatch({ type: SET_UPLOADING });
         const response = await edit(id, payload);
-        console.log('TCL: editTask response', response);
+
         if (response.status === 'ok') {
             dispatch({ type: EDIT_TASK });
-        } else {
-            dispatch({ type: SET_ERROR, error: response.message })
+        } else if (response.message) {
+            dispatch({ type: SET_ERROR, error: response.message });
         }
     },
     clearWarning: () => dispatch => {

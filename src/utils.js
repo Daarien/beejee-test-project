@@ -7,7 +7,7 @@ export async function get(query) {
     const req = query
         ? String(url + '?' + query + '&' + dev)
         : String(url + '?' + dev);
-    console.log('TCL: get -> req', req)
+
     return await fetch(req)
         .then(res => res.json())
         .catch(error => console.error(error));
@@ -15,6 +15,7 @@ export async function get(query) {
 
 export async function create(formData) {
     const req = String(url + 'create?' + dev);
+
     return await fetch(req, {
         method: 'POST',
         body: formData,
@@ -25,16 +26,16 @@ export async function create(formData) {
 
 export async function edit(id, formData) {
     const req = String(url + `edit/${id}?` + dev);
-    console.log('TCL: edit -> req', req);
+    const status_key = fixedEncodeURIComponent('status');
+    const status = fixedEncodeURIComponent(formData.get('status'));
+    const text_key = fixedEncodeURIComponent('text');
+    const text = fixedEncodeURIComponent(formData.get('text'));
+    const token_key = fixedEncodeURIComponent('token');
+    const token = fixedEncodeURIComponent('beejee');
 
-    const text = encodeURIComponent(formData.get('text'));
-    const status = encodeURIComponent(formData.get('status'));
-
-    const params_string = `status=${status}&text=${text}&token=beejee`;
-    console.log('TCL: edit -> params_string', params_string);
+    const params_string = `${status_key}=${status}&${text_key}=${text}&${token_key}=${token}`;
 
     const signature = md5(params_string);
-    console.log('TCL: edit -> signature', signature);
 
     formData.append('signature', signature);
 
@@ -44,4 +45,10 @@ export async function edit(id, formData) {
     })
         .then(res => res.json())
         .catch(error => console.error(error));
+}
+
+function fixedEncodeURIComponent(str) {
+    return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+        return '%' + c.charCodeAt(0).toString(16);
+    });
 }

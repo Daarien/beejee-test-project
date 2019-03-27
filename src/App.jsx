@@ -25,8 +25,8 @@ class App extends Component {
     clearWarning: PropTypes.func,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       sortBy: '', // default by ID asc
       sortDirection: '',
@@ -45,16 +45,6 @@ class App extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.sortBy !== this.state.sortBy) {
-      this.getData();
-    } else
-      if (prevState.sortDirection !== this.state.sortDirection) {
-        this.getData();
-      } else
-        if (prevState.currentPage !== this.state.currentPage) {
-          this.getData();
-        }
-
     // request new list after adding or editing task
     if (prevProps.uploading && !this.props.uploading) {
       this.props.getTasks();
@@ -76,17 +66,12 @@ class App extends Component {
   }
 
   getData = () => {
-    let query = '';
     const { sortBy, sortDirection, currentPage } = this.state;
-
-    if (currentPage > 1) {
-      query = `page=${currentPage}`;
-    }
+    let query = `page=${currentPage}`;
 
     if (sortBy) {
-      query = `${query ? '&' : ''}sort_field=${sortBy}&sort_direction=${sortDirection}`;
+      query += `${query ? '&' : ''}sort_field=${sortBy}&sort_direction=${sortDirection}`;
     }
-
     this.props.getTasks(query);
   }
 
@@ -94,26 +79,26 @@ class App extends Component {
     this.setState({
       sortBy: event.target.name,
       sortDirection: key,
-    });
+    }, () => this.getData());
   }
 
   handlePagerClick = page => {
     if (page !== this.state.currentPage) {
-      this.setState({ currentPage: page });
+      this.setState({ currentPage: page }, () => this.getData());
     }
   }
 
   handlePagerPrevClick = () => {
     const page = this.state.currentPage;
     if (page > 1) {
-      this.setState({ currentPage: page - 1 });
+      this.setState({ currentPage: page - 1 }, () => this.getData());
     }
   }
 
   handlePagerNextClick = () => {
     const page = this.state.currentPage;
     if (page < this.props.pages) {
-      this.setState({ currentPage: page + 1 });
+      this.setState({ currentPage: page + 1 }, () => this.getData());
     }
   }
 
